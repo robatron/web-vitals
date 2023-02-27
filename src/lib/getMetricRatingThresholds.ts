@@ -36,19 +36,16 @@ const metricRatingThresholds: Record<Metric['name'], MetricRatingThresholds> = {
 
 /**
  * Get the thresholds of a metric's "good", "needs improvement", and "poor"
- * ratings, formatted as `MetricRatingThresholds`:
+ * ratings, formatted as `MetricRatingThresholds`. Returns `null` if
+ * `metricName` is invalid.
  *
- * | Metric value                      | Rating              |
- * |-----------------------------------|---------------------|
- * | ≦ `good`                          | "good"              |
- * | > `good` and ≦ `needsImprovement` | "needs improvement" |
- * | > `needsImprovement`              | "poor"              |
- *
- * @Example
+ * @example
  * ```ts
- * getMetricRatingThresholds('CLS') → {good: 0.1, needsImprovement: 0.25}
+ * getMetricRatingThresholds('CLS') // → {good: 0.1, needsImprovement: 0.25}
+ * getMetricRatingThresholds('FID') // → {good: 100, needsImprovement:300}
+ * getMetricRatingThresholds('LCP') // → {good: 2500, needsImprovement: 4000}
+ * getMetricRatingThresholds('XYZ') // → null
  * ```
- * @returns The metric's rating thresholds or `null` if `metricName is invalid
  */
 export const getMetricRatingThresholds = (
   metricName: Metric['name']

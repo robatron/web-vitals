@@ -763,22 +763,26 @@ Metric-specific subclasses:
 
 #### `MetricRatingThresholds`
 
+The thresholds of metric's "good", "needs improvement", and "poor" ratings.
+
+- Metric values up to and including `good` are rated "good"
+- Metric values up to and including `needsImprovement` are rated "needs improvement"
+- Metric values above `needsImprovement` are "poor"
+
+| Metric value                      | Rating              |
+| --------------------------------- | ------------------- |
+| ≦ `good`                          | "good"              |
+| > `good` and ≦ `needsImprovement` | "needs improvement" |
+| > `needsImprovement`              | "poor"              |
+
 ```ts
-/**
- * The thresholds of metric's "good", "needs improvement", and "poor"
- * ratings:
- *
- * | Metric value                      | Rating              |
- * |-----------------------------------|---------------------|
- * | ≦ `good`                          | "good"              |
- * | > `good` and ≦ `needsImprovement` | "needs improvement" |
- * | > `needsImprovement`              | "poor"              |
- */
 export type MetricRatingThresholds = {
   good: number;
   needsImprovement: number;
 };
 ```
+
+_See also [`getMetricRatingThresholds()`](#getmetricratingthresholds)._
 
 #### `ReportCallback`
 
@@ -973,13 +977,17 @@ type getMetricRatingThresholds = (
 ) => MetricRatingThresholds | null;
 ```
 
-`getMetricRatingThresholds()` can be used to get rating thresholds for each Web Vitals metric as [`MetricRatingThresholds`](/src/types/base.ts#:~:text=type%20MetricRatingThresholds). Example:
+Get the thresholds of a metric's "good", "needs improvement", and "poor" ratings, formatted as a [`MetricRatingThresholds`](#metricratingthresholds) object. Returns `null` if `metricName` is invalid.
+
+Example:
 
 ```ts
 import {getMetricRatingThresholds} from 'web-vitals';
 
-console.log(getMetricRatingThresholds('CLS'));
-// {good: 0.1, needsImprovement: 0.25}
+getMetricRatingThresholds('CLS'); // → {good: 0.1, needsImprovement: 0.25}
+getMetricRatingThresholds('FID'); // → {good: 100, needsImprovement:300}
+getMetricRatingThresholds('LCP'); // → {good: 2500, needsImprovement: 4000}
+getMetricRatingThresholds('XYZ'); // → null
 ```
 
 ### Attribution:
