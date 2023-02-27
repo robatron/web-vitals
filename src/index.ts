@@ -20,6 +20,7 @@ export {onFID} from './onFID.js';
 export {onINP} from './onINP.js';
 export {onLCP} from './onLCP.js';
 export {onTTFB} from './onTTFB.js';
+export {getMetricRatingThresholds} from './lib/getMetricRatingThresholds.js';
 
 export * from './deprecated.js';
 export * from './types.js';

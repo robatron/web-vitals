@@ -21,6 +21,7 @@ import {getNavigationEntry} from './lib/getNavigationEntry.js';
 import {ReportCallback, ReportOpts} from './types.js';
 import {getActivationStart} from './lib/getActivationStart.js';
 import {whenActivated} from './lib/whenActivated.js';
+import {getMetricRatingThresholds} from './lib/getMetricRatingThresholds.js';
 
 /**
  * Runs in the next task after the page is done loading and/or prerendering.
@@ -56,9 +57,7 @@ export const onTTFB = (onReport: ReportCallback, opts?: ReportOpts) => {
   // Set defaults
   opts = opts || {};
 
-  // https://web.dev/ttfb/#what-is-a-good-ttfb-score
-  const thresholds = [800, 1800];
-
+  const thresholds = getMetricRatingThresholds('TTFB');
   let metric = initMetric('TTFB');
   let report = bindReporter(
     onReport,

@@ -23,6 +23,7 @@ import {onHidden} from './lib/onHidden.js';
 import {runOnce} from './lib/runOnce.js';
 import {onFCP} from './onFCP.js';
 import {CLSMetric, CLSReportCallback, ReportOpts} from './types.js';
+import {getMetricRatingThresholds} from './lib/getMetricRatingThresholds.js';
 
 /**
  * Calculates the [CLS](https://web.dev/cls/) value for the current page and
@@ -53,12 +54,9 @@ export const onCLS = (onReport: CLSReportCallback, opts?: ReportOpts) => {
   // Note: this is done to match the current behavior of CrUX.
   onFCP(
     runOnce(() => {
-      // https://web.dev/cls/#what-is-a-good-cls-score
-      const thresholds = [0.1, 0.25];
-
+      const thresholds = getMetricRatingThresholds('CLS');
       let metric = initMetric('CLS', 0);
       let report: ReturnType<typeof bindReporter>;
-
       let sessionValue = 0;
       let sessionEntries: PerformanceEntry[] = [];
 

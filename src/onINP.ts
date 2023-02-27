@@ -16,6 +16,7 @@
 
 import {onBFCacheRestore} from './lib/bfcache.js';
 import {bindReporter} from './lib/bindReporter.js';
+import {getMetricRatingThresholds} from './lib/getMetricRatingThresholds.js';
 import {initMetric} from './lib/initMetric.js';
 import {observe} from './lib/observe.js';
 import {onHidden} from './lib/onHidden.js';
@@ -146,12 +147,10 @@ export const onINP = (onReport: ReportCallback, opts?: ReportOpts) => {
   opts = opts || {};
 
   whenActivated(() => {
-    // https://web.dev/inp/#what-is-a-good-inp-score
-    const thresholds = [200, 500];
-
     // TODO(philipwalton): remove once the polyfill is no longer needed.
     initInteractionCountPolyfill();
 
+    const thresholds = getMetricRatingThresholds('INP');
     let metric = initMetric('INP');
     let report: ReturnType<typeof bindReporter>;
 
