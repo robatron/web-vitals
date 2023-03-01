@@ -1235,6 +1235,12 @@ Then navigate to `http://localhost:9090/test/<view>`, where `<view>` is the base
 
 You'll likely want to combine this with `npm run watch` to ensure any changes you make are transpiled and rebuilt.
 
+#### Selenium errors
+
+If you encounter a `@wdio/selenium-standalone-service: Error: Selenium exited before it could start with code 1` error, verify Java is installed and system Java wrappers are able to find it.
+
+For example, [OpenJDK](https://openjdk.org/) can be installed in MacOS via `brew install java`, and `sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk` will ensure system Java wrappers can find it.
+
 ## Integrations
 
 - [**Web Vitals Connector**](https://goo.gle/web-vitals-connector): Data Studio connector to create dashboards from [Web Vitals data captured in BiqQuery](https://web.dev/vitals-ga4/).
